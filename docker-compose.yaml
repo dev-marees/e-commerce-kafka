@@ -35,7 +35,7 @@ services:
   order-service:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.order
     env_file:
       - .env
     ports:
@@ -43,5 +43,15 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      kafka:
+        condition: service_started
+
+  payment-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.payment
+    env_file:
+      - .env
+    depends_on:
       kafka:
         condition: service_started
