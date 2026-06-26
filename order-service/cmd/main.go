@@ -14,13 +14,15 @@ import (
 
 func main() {
 
-	db := config.ConnectDB()
+	cfg := config.LoadConfig()
+
+	db := config.ConnectDB(cfg)
+
+	producer := kafka.NewProducer(cfg)
 
 	repo := &repository.Repository{
 		DB: db,
 	}
-
-	producer := kafka.NewProducer()
 
 	svc := &service.Service{
 		Repo:     repo,
@@ -35,5 +37,5 @@ func main() {
 
 	routes.Register(router, h)
 
-	router.Run(":8080")
+	router.Run(":" + cfg.AppPort)
 }
