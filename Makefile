@@ -1,11 +1,11 @@
 up:
-	docker-compose up -d
+	docker compose up -d
 
 down:
-	docker-compose down
+	docker compose down
 
 logs:
-	docker-compose logs -f
+	docker compose logs -f
 
 build:
 	cd order-service && go build -o app cmd/main.go
